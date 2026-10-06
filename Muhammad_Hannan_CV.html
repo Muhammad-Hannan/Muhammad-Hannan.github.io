@@ -145,7 +145,14 @@
   .name { max-width:700px; font-size:clamp(48px,7.2vw,88px); line-height:.98; letter-spacing:-.065em; }
   .tagline { max-width:620px; margin-top:24px; color:#d6e1e9; font-size:clamp(18px,2vw,22px); line-height:1.65; }
   .contact { display:none; }
-  .photo { flex-basis:clamp(190px,23vw,290px); width:clamp(190px,23vw,290px); height:clamp(240px,30vw,360px); object-position:center 23%; border:7px solid rgba(255,255,255,.9); border-radius:150px 150px 26px 26px; box-shadow:0 25px 65px rgba(0,0,0,.32); }
+  .portrait-water { position:relative; z-index:1; isolation:isolate; flex:0 0 clamp(190px,23vw,290px); width:clamp(190px,23vw,290px); }
+  .portrait-water:before,.portrait-water:after { position:absolute; z-index:-1; content:""; pointer-events:none; }
+  .portrait-water:before { inset:-28px -34px; border-radius:48%; background:radial-gradient(ellipse at 50% 50%,rgba(74,190,201,.24) 0 25%,transparent 26% 37%,rgba(139,224,225,.3) 38% 39%,transparent 40% 52%,rgba(111,204,217,.25) 53% 54%,transparent 55%),linear-gradient(165deg,transparent 35%,rgba(83,192,205,.35) 47%,transparent 57%,rgba(126,221,224,.25) 64%,transparent 74%); background-size:100% 100%,220% 220%; filter:blur(1px); animation:water-drift 8s ease-in-out infinite; }
+  .portrait-water:after { inset:-17px -21px; border:1px solid rgba(164,235,232,.42); border-radius:47% 53% 45% 55%; box-shadow:0 0 0 12px rgba(117,213,218,.08),0 0 0 25px rgba(117,213,218,.055); animation:water-ripple 7s ease-in-out infinite; }
+  @keyframes water-drift { 0%,100% { background-position:0 0,0 20%; transform:translateY(0) scale(.97); opacity:.72; } 50% { background-position:0 0,100% 80%; transform:translateY(-7px) scale(1.03); opacity:1; } }
+  @keyframes water-ripple { 0%,100% { transform:scale(.96) rotate(-3deg); opacity:.55; } 50% { transform:scale(1.04) rotate(3deg); opacity:1; } }
+  .photo { position:relative; z-index:1; display:block; width:100%; height:clamp(240px,30vw,360px); object-fit:cover; object-position:center 23%; border:7px solid rgba(255,255,255,.9); border-radius:150px 150px 26px 26px; box-shadow:0 25px 65px rgba(0,0,0,.32); }
+  @media(prefers-reduced-motion:reduce) { .portrait-water:before,.portrait-water:after { animation:none; } }
   .hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
   .button { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:48px; padding:0 19px; border:1px solid rgba(255,255,255,.35); border-radius:5px; color:#fff; font-size:13px; font-weight:700; transition:transform .2s,background .2s; }
   .button:hover { transform:translateY(-2px); text-decoration:none; }
@@ -213,6 +220,8 @@
     .portfolio-nav .nav-links a { font-size:11px; }
     .header { min-height:auto; padding:62px 7vw; gap:30px; }
     .photo { flex-basis:190px; width:190px; height:240px; }
+      .portrait-water { flex-basis:190px; width:190px; }
+      .photo { height:240px; }
     .intro-strip { grid-template-columns:1fr; gap:25px; padding:65px 0; }
     .research-grid { grid-template-columns:repeat(2,1fr); }
     .feature { grid-template-columns:.75fr 1.25fr; }
@@ -230,6 +239,10 @@
     .header { flex-direction:column-reverse; align-items:flex-start; gap:26px; padding:40px 23px 46px; }
     .header:after { right:-240px; top:-150px; }
     .photo { width:124px; height:154px; flex-basis:auto; border-width:5px; border-radius:90px 90px 18px 18px; }
+      .portrait-water { width:124px; flex-basis:auto; }
+      .photo { height:154px; border-width:5px; border-radius:90px 90px 18px 18px; }
+      .portrait-water { width:105px; flex-basis:105px; }
+      .photo { height:125px; }
     .eyebrow { font-size:9px; }
     .name { font-size:clamp(48px,14vw,68px); }
     .tagline { margin-top:17px; font-size:16px; }
@@ -289,6 +302,7 @@
       </div>
     </div>
     <img class="photo" src="Weixin%20Image_20261007035649_211_34.png" alt="Muhammad Hannan">
+    <div class="portrait-water" aria-hidden="true"><img class="photo" src="Weixin%20Image_20261007035649_211_34.png" alt="Muhammad Hannan"></div>
   </header>
 
   <main class="portfolio">
