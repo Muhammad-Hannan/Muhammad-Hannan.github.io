@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Muhammad Hannan is a hydrology researcher exploring satellite observations, AI-driven downscaling, and water security.">
+<meta name="theme-color" content="#102a43">
+<title>Muhammad Hannan — Hydrology, Data &amp; Water Security</title>
+<style>
+  :root { color-scheme:light; --navy:#102a43; --navy-2:#183b5b; --ink:#17212b; --muted:#5c6b78; --line:#dce4ea; --pale:#f3f6f8; --white:#fff; --accent:#b9d5e8; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; scroll-padding-top:88px; }
+  body { margin:0; background:#f5f7f9; color:var(--ink); font-family:Inter,"Segoe UI",Arial,sans-serif; font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  a { color:var(--navy-2); text-decoration:none; }
+  a:hover { color:#285f88; text-decoration:underline; text-underline-offset:3px; }
+  .topbar { position:sticky; top:0; z-index:10; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); backdrop-filter:blur(12px); }
+  .nav { max-width:1120px; margin:auto; min-height:66px; padding:0 28px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+  .brand { color:var(--navy); font-size:15px; font-weight:800; letter-spacing:.03em; white-space:nowrap; }
+  .nav-links { display:flex; align-items:center; gap:24px; }
+  .nav-links a { color:#425466; font-size:13px; font-weight:650; }
+  .nav-links a:hover { color:var(--navy); text-decoration:none; }
+  .page { width:min(100% - 40px, 1064px); margin:34px auto 52px; background:var(--white); border:1px solid #e7ecf0; border-radius:20px; box-shadow:0 18px 55px rgba(16,42,67,.08); overflow:hidden; }
+  .header { position:relative; display:flex; align-items:center; gap:42px; padding:68px 76px 62px; color:#fff; background:linear-gradient(125deg,#102a43 0%,#183b5b 65%,#244f70 100%); }
+  .header:after { position:absolute; content:""; right:145px; top:-150px; width:330px; height:330px; border:1px solid rgba(255,255,255,.11); border-radius:50%; box-shadow:0 0 0 42px rgba(255,255,255,.035),0 0 0 84px rgba(255,255,255,.025); pointer-events:none; }
+  .header-text { position:relative; z-index:1; flex:1; min-width:0; }
+  .eyebrow { margin-bottom:13px; color:#c7d9e7; font-size:12px; font-weight:750; letter-spacing:.18em; text-transform:uppercase; }
+  .name { color:#fff; font-size:clamp(36px,5vw,56px); font-weight:780; line-height:1.08; letter-spacing:-.045em; }
+  .tagline { max-width:660px; margin-top:18px; color:#e1eaf0; font-size:18px; font-weight:450; line-height:1.55; }
+  .contact { display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:27px; color:#edf3f7; font-size:13px; }
+  .contact span { display:inline-flex; gap:6px; align-items:baseline; }
+  .contact b { color:#b9d5e8; font-weight:700; }
+  .contact a { color:#fff; }
+  .photo { position:relative; z-index:1; flex:0 0 174px; width:174px; height:210px; object-fit:cover; object-position:center 24%; border:4px solid rgba(255,255,255,.92); border-radius:18px; box-shadow:0 16px 36px rgba(0,0,0,.22); }
+  .quick-facts { display:grid; grid-template-columns:repeat(3,1fr); margin:0; padding:0 76px; background:#f2f6f9; border-bottom:1px solid var(--line); }
+  .fact { padding:23px 20px 23px 0; }
+  .fact + .fact { border-left:1px solid #dce4ea; padding-left:28px; }
+  .fact strong { display:block; color:var(--navy); font-size:15px; line-height:1.35; }
+  .fact span { display:block; margin-top:4px; color:var(--muted); font-size:12px; }
+  .content { padding:26px 76px 62px; }
+  section { scroll-margin-top:88px; }
+  h2.section { display:flex; align-items:center; gap:12px; margin:42px 0 20px; color:var(--navy); font-size:17px; font-weight:800; letter-spacing:.065em; text-transform:uppercase; }
+  h2.section:after { height:1px; flex:1; content:""; background:var(--line); }
+  h2.section .num { display:grid; width:30px; height:30px; place-items:center; flex:none; border-radius:9px; background:#eaf1f6; color:var(--navy-2); font-size:11px; letter-spacing:0; }
+  .summary { max-width:850px; color:#384956; font-size:16px; line-height:1.85; }
+  .item { display:flex; justify-content:space-between; gap:24px; margin:0 0 22px; padding:0 0 18px; border-bottom:1px solid #edf1f4; }
+  .item:last-child { border-bottom:0; padding-bottom:0; }
+  .item-left { flex:1; min-width:0; }
+  .item-title { color:#152635; font-size:16px; font-weight:750; line-height:1.45; }
+  .item-sub { margin-top:3px; color:var(--muted); font-size:14px; }
+  .item-right { flex:none; padding-top:3px; color:var(--navy-2); font-size:13px; font-weight:700; white-space:nowrap; }
+  ul.duties { margin:10px 0 0; padding-left:19px; color:#435360; font-size:14px; }
+  ul.duties li { margin:5px 0; padding-left:3px; }
+  .skills { display:flex; flex-wrap:wrap; gap:9px; }
+  .chip { padding:7px 12px; border:1px solid #d8e3eb; border-radius:999px; background:#f4f7f9; color:#29465e; font-size:13px; font-weight:650; }
+  ol.pubs { display:grid; gap:0; margin:0; padding:0; list-style:none; counter-reset:publication; }
+  ol.pubs li { position:relative; padding:15px 0 15px 40px; border-bottom:1px solid #edf1f4; color:#42515d; font-size:13px; line-height:1.75; counter-increment:publication; }
+  ol.pubs li:before { position:absolute; left:0; top:17px; content:counter(publication,decimal-leading-zero); color:#8296a6; font-size:11px; font-weight:800; letter-spacing:.04em; }
+  ol.pubs li:last-child { border-bottom:0; }
+  ol.pubs i { color:#243b4e; }
+  ul.ach { margin:0; padding:0; list-style:none; }
+  ul.ach li { position:relative; margin:0 0 12px; padding-left:23px; color:#42515d; }
+  ul.ach li:before { position:absolute; left:0; color:#315c7b; content:"✦"; }
+  .references { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .reference { padding:19px; border:1px solid var(--line); border-radius:12px; background:#fbfcfd; }
+  .reference .item-sub { font-size:13px; line-height:1.65; }
+  .footer-note { margin-top:24px; padding-top:20px; border-top:1px solid var(--line); color:#71808c; font-size:13px; text-align:center; }
+  .footer { padding:23px 30px; background:var(--navy); color:#d8e3ea; font-size:12px; text-align:center; }
+  .footer a { color:#fff; }
+  .print-button { position:fixed; right:24px; bottom:24px; z-index:12; padding:12px 17px; border:0; border-radius:999px; background:var(--navy); color:#fff; box-shadow:0 8px 22px rgba(16,42,67,.24); font:700 13px inherit; cursor:pointer; }
+  .print-button:hover { background:#244f70; }
+  @media(max-width:760px) {
+    .nav { min-height:58px; padding:0 18px; }
+    .nav-links { gap:14px; overflow-x:auto; }
+    .nav-links a { font-size:12px; white-space:nowrap; }
+    .brand { font-size:13px; }
+    .page { width:min(100% - 24px, 640px); margin:16px auto 28px; border-radius:15px; }
+    .header { gap:24px; padding:42px 30px 38px; }
+    .photo { flex-basis:132px; width:132px; height:164px; border-radius:14px; }
+    .tagline { font-size:16px; }
+    .contact { gap:8px 14px; font-size:12px; }
+    .quick-facts { padding:0 30px; }
+    .fact { padding:18px 12px 18px 0; }
+    .fact + .fact { padding-left:15px; }
+    .content { padding:12px 30px 42px; }
+    h2.section { margin-top:34px; font-size:15px; }
+  }
+  @media(max-width:520px) {
+    body { font-size:15px; }
+    .nav { display:block; padding:11px 14px 9px; }
+    .brand { display:block; margin-bottom:8px; }
+    .nav-links { gap:16px; padding-bottom:2px; }
+    .page { width:100%; margin:0; border:0; border-radius:0; box-shadow:none; }
+    .header { flex-direction:column-reverse; align-items:flex-start; gap:19px; padding:33px 23px 30px; }
+    .header:after { right:-200px; top:-90px; }
+    .photo { width:112px; height:132px; flex-basis:auto; }
+    .eyebrow { font-size:10px; }
+    .name { font-size:38px; }
+    .tagline { margin-top:12px; font-size:15px; }
+    .contact { display:grid; gap:7px; margin-top:19px; }
+    .quick-facts { padding:0 22px; }
+    .fact { padding:15px 7px 15px 0; }
+    .fact + .fact { padding-left:10px; }
+    .fact strong { font-size:12px; }
+    .fact span { font-size:10px; }
+    .content { padding:5px 22px 35px; }
+    h2.section { gap:9px; margin:30px 0 15px; font-size:13px; letter-spacing:.04em; }
+    h2.section .num { width:26px; height:26px; }
+    .summary { font-size:14px; }
+    .item { flex-direction:column; gap:4px; margin-bottom:18px; padding-bottom:15px; }
+    .item-right { order:-1; font-size:12px; }
+    .item-title { font-size:15px; }
+    .item-sub { font-size:13px; }
+    ul.duties { font-size:13px; }
+    .references { grid-template-columns:1fr; gap:11px; }
+    .print-button { right:14px; bottom:14px; padding:11px 14px; }
+  }
+  @media print {
+    @page { size:auto; margin:16mm; }
+    body { background:#fff; font-size:10pt; }
+    .topbar,.print-button { display:none; }
+    .page { width:100%; margin:0; border:0; border-radius:0; box-shadow:none; }
+    .header { padding:22px 28px; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+    .header:after { display:none; }
+    .photo { width:105px; height:125px; flex-basis:105px; }
+    .quick-facts,.footer { print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+    .quick-facts { padding:0 28px; }
+    .content { padding:10px 28px 25px; }
+    h2.section { break-after:avoid; }
+    .item,.reference,ol.pubs li { break-inside:avoid; }
+    a { color:inherit; text-decoration:none; }
+  }
+  /* Portfolio presentation */
+  body { background:#fff; color:#101820; font-family:Inter,"Segoe UI",Arial,sans-serif; }
+  .page { width:100%; max-width:none; margin:0; border:0; border-radius:0; box-shadow:none; overflow:visible; }
+  .portfolio-nav { position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:space-between; min-height:76px; padding:0 max(7vw,24px); background:rgba(255,255,255,.94); border-bottom:1px solid #e8edf1; backdrop-filter:blur(16px); }
+  .nav-mark { display:flex; align-items:center; gap:12px; color:#102a43; font-size:13px; font-weight:800; letter-spacing:.11em; }
+  .nav-mark span { display:grid; width:36px; height:36px; place-items:center; border-radius:11px; background:#102a43; color:#fff; font-size:12px; letter-spacing:0; }
+  .portfolio-nav .nav-links { gap:clamp(14px,3vw,34px); }
+  .portfolio-nav .nav-links a { color:#43515d; font-size:13px; font-weight:650; }
+  .portfolio-nav .nav-links a:hover { color:#102a43; }
+  .header { min-height:590px; padding:80px max(9vw,34px); gap:clamp(38px,8vw,110px); overflow:hidden; background:linear-gradient(118deg,#0b1d2c 0%,#102a43 57%,#183b5b 100%); }
+  .header:after { right:8%; top:-210px; width:500px; height:500px; border-color:rgba(194,220,236,.14); box-shadow:0 0 0 60px rgba(194,220,236,.035),0 0 0 120px rgba(194,220,236,.025); }
+  .header-text { max-width:700px; }
+  .eyebrow { margin-bottom:20px; color:#a8cbe0; font-size:11px; letter-spacing:.2em; }
+  .name { max-width:700px; font-size:clamp(48px,7.2vw,88px); line-height:.98; letter-spacing:-.065em; }
+  .tagline { max-width:620px; margin-top:24px; color:#d6e1e9; font-size:clamp(18px,2vw,22px); line-height:1.65; }
+  .contact { display:none; }
+  .photo { flex-basis:clamp(190px,23vw,290px); width:clamp(190px,23vw,290px); height:clamp(240px,30vw,360px); object-position:center 23%; border:7px solid rgba(255,255,255,.9); border-radius:150px 150px 26px 26px; box-shadow:0 25px 65px rgba(0,0,0,.32); }
+  .hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+  .button { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:48px; padding:0 19px; border:1px solid rgba(255,255,255,.35); border-radius:5px; color:#fff; font-size:13px; font-weight:700; transition:transform .2s,background .2s; }
+  .button:hover { transform:translateY(-2px); text-decoration:none; }
+  .button.primary { border-color:#fff; background:#fff; color:#102a43; }
+  .button.secondary:hover { background:rgba(255,255,255,.1); }
+  .portfolio { max-width:1160px; margin:0 auto; padding:0 34px; }
+  .intro-strip { display:grid; grid-template-columns:1.1fr .9fr; gap:70px; padding:96px 0 88px; border-bottom:1px solid #e4e9ed; }
+  .section-kicker { margin-bottom:15px; color:#526f85; font-size:11px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; }
+  .display-heading { max-width:690px; margin:0; color:#102a43; font-size:clamp(34px,4vw,52px); font-weight:730; line-height:1.12; letter-spacing:-.045em; }
+  .intro-copy { align-self:end; color:#52606b; font-size:16px; line-height:1.9; }
+  .intro-copy p { margin:0 0 12px; }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; padding:35px 0; border-bottom:1px solid #e4e9ed; }
+  .stat strong { display:block; color:#102a43; font-size:28px; letter-spacing:-.04em; }
+  .stat span { color:#65727d; font-size:12px; }
+  .portfolio-section { padding:84px 0 20px; }
+  .section-head { display:flex; align-items:end; justify-content:space-between; gap:24px; margin-bottom:32px; }
+  .section-head .display-heading { font-size:clamp(30px,3.5vw,42px); }
+  .section-note { max-width:280px; margin:0; color:#65727d; font-size:13px; }
+  .research-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:17px; }
+  .research-card { position:relative; min-height:275px; padding:28px 25px; border:1px solid #e2e8ed; background:#fff; transition:transform .2s,border-color .2s,box-shadow .2s; }
+  .research-card:hover { transform:translateY(-4px); border-color:#b7c8d5; box-shadow:0 15px 35px rgba(16,42,67,.08); }
+  .card-index { display:block; margin-bottom:44px; color:#7891a4; font-size:11px; font-weight:800; letter-spacing:.13em; }
+  .research-card h3 { margin:0 0 12px; color:#102a43; font-size:20px; line-height:1.3; letter-spacing:-.02em; }
+  .research-card p { margin:0; color:#5b6872; font-size:14px; line-height:1.75; }
+  .tag-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+  .tag { padding:6px 9px; background:#f1f5f8; color:#38566d; font-size:10px; font-weight:700; letter-spacing:.025em; }
+  .feature { display:grid; grid-template-columns:.85fr 1.15fr; min-height:355px; margin-top:38px; background:#102a43; color:#fff; }
+  .feature-art { position:relative; min-height:320px; overflow:hidden; background:radial-gradient(ellipse at 50% 100%,#4081a8 0,#1b506f 25%,#102a43 66%); }
+  .feature-art:before,.feature-art:after { position:absolute; content:""; left:-20%; width:140%; height:150px; border:1px solid rgba(210,235,248,.38); border-radius:50%; transform:rotate(-13deg); }
+  .feature-art:before { top:100px; box-shadow:0 18px 0 rgba(210,235,248,.08),0 38px 0 rgba(210,235,248,.08),0 58px 0 rgba(210,235,248,.08),0 78px 0 rgba(210,235,248,.08); }
+  .feature-art:after { top:145px; transform:rotate(17deg); border-color:rgba(210,235,248,.22); }
+  .feature-copy { align-self:center; padding:48px clamp(28px,5vw,68px); }
+  .feature-copy .section-kicker { color:#a8cbe0; }
+  .feature-copy h3 { margin:0 0 16px; font-size:clamp(26px,3vw,36px); line-height:1.2; letter-spacing:-.035em; }
+  .feature-copy p { color:#d0dce5; font-size:14px; line-height:1.8; }
+  .text-link { display:inline-flex; gap:9px; align-items:center; margin-top:14px; color:#fff; font-size:13px; font-weight:700; }
+  .text-link:hover { color:#bad6e8; }
+  .publication-list { border-top:1px solid #dfe6eb; }
+  .publication { display:grid; grid-template-columns:74px 1fr auto; gap:20px; align-items:start; padding:22px 0; border-bottom:1px solid #e8edf1; }
+  .publication-year { color:#688399; font-size:12px; font-weight:750; }
+  .publication h3 { margin:0 0 6px; color:#172b3b; font-size:15px; line-height:1.55; }
+  .publication p { margin:0; color:#65727d; font-size:13px; font-style:italic; }
+  .publication a { color:#315c7b; font-size:12px; font-weight:700; white-space:nowrap; }
+  .education-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .education-card { padding:24px; border-top:2px solid #183b5b; background:#f5f7f8; }
+  .education-card time { color:#658096; font-size:11px; font-weight:750; }
+  .education-card h3 { margin:16px 0 7px; color:#102a43; font-size:17px; line-height:1.4; }
+  .education-card p { margin:0; color:#5d6a75; font-size:13px; line-height:1.6; }
+  .contact-panel { display:grid; grid-template-columns:1fr auto; align-items:center; gap:30px; margin:84px 0 0; padding:45px clamp(25px,5vw,58px); background:#f2f5f7; }
+  .contact-panel h2 { max-width:570px; margin:0; color:#102a43; font-size:clamp(27px,3.5vw,40px); line-height:1.16; letter-spacing:-.04em; }
+  .contact-panel p { margin:12px 0 0; color:#5a6873; font-size:14px; }
+  .contact-actions { display:flex; flex-wrap:wrap; gap:10px; }
+  .contact-actions .button { border-color:#102a43; color:#102a43; }
+  .contact-actions .button.primary { background:#102a43; color:#fff; }
+  .portfolio-footer { display:flex; justify-content:space-between; gap:18px; margin-top:44px; padding:22px 0; border-top:1px solid #e1e7eb; color:#687681; font-size:11px; }
+  .legacy { display:none; }
+  @media(max-width:760px) {
+    .portfolio-nav { min-height:67px; padding:0 22px; }
+    .portfolio-nav .nav-links { gap:17px; }
+    .portfolio-nav .nav-links a { font-size:11px; }
+    .header { min-height:auto; padding:62px 7vw; gap:30px; }
+    .photo { flex-basis:190px; width:190px; height:240px; }
+    .intro-strip { grid-template-columns:1fr; gap:25px; padding:65px 0; }
+    .research-grid { grid-template-columns:repeat(2,1fr); }
+    .feature { grid-template-columns:.75fr 1.25fr; }
+    .education-grid { grid-template-columns:1fr; }
+    .education-card { display:grid; grid-template-columns:100px 1fr; gap:0 14px; }
+    .education-card time { grid-row:span 2; padding-top:4px; }
+    .education-card h3 { margin:0 0 5px; }
+  }
+  @media(max-width:520px) {
+    .portfolio-nav { display:flex; min-height:62px; padding:0 15px; }
+    .nav-mark { gap:0; font-size:0; }
+    .nav-mark span { width:31px; height:31px; font-size:11px; }
+    .portfolio-nav .nav-links { gap:11px; }
+    .portfolio-nav .nav-links a { font-size:10px; }
+    .header { flex-direction:column-reverse; align-items:flex-start; gap:26px; padding:40px 23px 46px; }
+    .header:after { right:-240px; top:-150px; }
+    .photo { width:124px; height:154px; flex-basis:auto; border-width:5px; border-radius:90px 90px 18px 18px; }
+    .eyebrow { font-size:9px; }
+    .name { font-size:clamp(48px,14vw,68px); }
+    .tagline { margin-top:17px; font-size:16px; }
+    .hero-actions { margin-top:22px; }
+    .button { min-height:44px; padding:0 14px; font-size:12px; }
+    .portfolio { padding:0 22px; }
+    .intro-strip { gap:18px; padding:55px 0; }
+    .display-heading { font-size:34px; }
+    .intro-copy { font-size:14px; }
+    .stats { gap:8px; padding:24px 0; }
+    .stat strong { font-size:22px; }
+    .stat span { font-size:10px; }
+    .portfolio-section { padding-top:60px; }
+    .section-head { display:block; }
+    .section-head .display-heading { font-size:31px; }
+    .section-note { margin-top:12px; }
+    .research-grid { grid-template-columns:1fr; }
+    .research-card { min-height:225px; padding:23px; }
+    .card-index { margin-bottom:27px; }
+    .feature { grid-template-columns:1fr; }
+    .feature-art { min-height:190px; }
+    .feature-art:before { top:45px; }
+    .feature-art:after { top:85px; }
+    .feature-copy { padding:30px 25px 35px; }
+    .publication { grid-template-columns:47px 1fr; gap:12px; }
+    .publication a { grid-column:2; }
+    .contact-panel { grid-template-columns:1fr; margin-top:60px; padding:32px 23px; }
+    .contact-actions { gap:8px; }
+    .portfolio-footer { flex-direction:column; gap:5px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="portfolio-nav" aria-label="Main navigation">
+    <a class="nav-mark" href="#top" aria-label="Muhammad Hannan home"><span>MH</span> MUHAMMAD HANNAN</a>
+    <div class="nav-links"><a href="#research">Research</a><a href="#publications">Publications</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="header" id="top">
+    <div class="header-text">
+      <div class="eyebrow">HYDROLOGY · SATELLITE DATA · WATER SECURITY</div>
+      <div class="name">MUHAMMAD HANNAN</div>
+      <div class="tagline">Making satellite observations more useful for understanding groundwater, hydrological extremes, and a changing water future.</div>
+      <div class="contact">
+        <span><b>Phone:</b> +92 335 7874694 / +86 159 9636 0163</span><br>
+        <span><b>Email:</b> mhannan7874@gmail.com</span><br>
+        <span><b>ORCID:</b> orcid.org/0009-0008-3523-9835</span>
+        <span><b>ResearchGate:</b> researchgate.net/profile/Muhammad-Hannan-6</span>
+        <span><b>LinkedIn:</b> linkedin.com/in/muhammad-hannan-2763b5255</span>
+      </div>
+      <div class="hero-actions">
+        <a class="button primary" href="#research">Explore my research <span aria-hidden="true">↘</span></a>
+        <a class="button secondary" href="mailto:mhannan7874@gmail.com">Get in touch <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <img class="photo" src="Weixin%20Image_20261007035649_211_34.png" alt="Muhammad Hannan">
+  </header>
+
+  <main class="portfolio">
+    <section class="intro-strip" id="about">
+      <div><div class="section-kicker">A little about my work</div><h1 class="display-heading">Water systems are complex. Better data can help us see them clearly.</h1></div>
+      <div class="intro-copy"><p>I’m a Ph.D. candidate in Hydrology and Water Resources at Hohai University in Nanjing, China. My work brings together satellite gravimetry, remote sensing, and machine learning to better understand water storage and its change.</p><p>I’m especially interested in translating large-scale observations into meaningful insight for groundwater monitoring and water security in data-sparse regions.</p></div>
+    </section>
+
+    <div class="stats" aria-label="Research at a glance">
+      <div class="stat"><strong>2024–28</strong><span>Ph.D. research · Hohai University</span></div>
+      <div class="stat"><strong>16</strong><span>Research publications listed</span></div>
+      <div class="stat"><strong>GRACE</strong><span>Satellite hydrology focus</span></div>
+    </div>
+
+    <section class="portfolio-section" id="research">
+      <div class="section-head"><div><div class="section-kicker">Research directions</div><h2 class="display-heading">Questions that guide my work.</h2></div><p class="section-note">Connecting observations, methods, and water challenges across scales.</p></div>
+      <div class="research-grid">
+        <article class="research-card"><span class="card-index">01 / WATER STORAGE</span><h3>Groundwater from space</h3><p>Using GRACE and GRACE-FO satellite gravimetry to investigate groundwater storage dynamics, depletion patterns, and long-term change.</p><div class="tag-row"><span class="tag">GRACE / GRACE-FO</span><span class="tag">Groundwater</span></div></article>
+        <article class="research-card"><span class="card-index">02 / METHODS</span><h3>AI-driven downscaling</h3><p>Developing machine-learning and deep-learning approaches to add useful local detail to coarse-resolution satellite water observations.</p><div class="tag-row"><span class="tag">Machine learning</span><span class="tag">PyTorch</span></div></article>
+        <article class="research-card"><span class="card-index">03 / EARTH OBSERVATION</span><h3>Surface water &amp; wetlands</h3><p>Combining long-term satellite records and remote sensing to explore surface-water change, wetland connectivity, and hydrological extremes.</p><div class="tag-row"><span class="tag">Remote sensing</span><span class="tag">Google Earth Engine</span></div></article>
+        <article class="research-card"><span class="card-index">04 / CLIMATE</span><h3>Hydroclimatic variability</h3><p>Studying precipitation extremes, flood-driven change, and the evolving interactions between climate and regional water resources.</p><div class="tag-row"><span class="tag">Climate variability</span><span class="tag">Hydrology</span></div></article>
+        <article class="research-card"><span class="card-index">05 / WATER SECURITY</span><h3>Data for resilient decisions</h3><p>Bridging satellite-based assessment and integrated water resource management, with a focus on water security in South Asia.</p><div class="tag-row"><span class="tag">IWRM</span><span class="tag">Indus Basin</span></div></article>
+        <article class="research-card"><span class="card-index">06 / TOOLS</span><h3>Geospatial workflows</h3><p>Applying Python, GIS, and cloud-based geospatial analysis to work with large environmental datasets and communicate their patterns.</p><div class="tag-row"><span class="tag">Python</span><span class="tag">GIS</span></div></article>
+      </div>
+      <div class="feature"><div class="feature-art" role="img" aria-label="Abstract layered lines representing satellite-observed water patterns"></div><div class="feature-copy"><div class="section-kicker">In focus · Indus Basin</div><h3>From satellite signals to groundwater insight.</h3><p>My research explores how machine-learning downscaling of GRACE observations can reveal regional groundwater patterns and depletion hotspots across Pakistan’s Indus Basin.</p><a class="text-link" href="https://orcid.org/0009-0008-3523-9835" target="_blank" rel="noopener noreferrer">Explore my research profile <span aria-hidden="true">↗</span></a></div></div>
+    </section>
+
+    <section class="portfolio-section" id="publications">
+      <div class="section-head"><div><div class="section-kicker">Selected writing</div><h2 class="display-heading">Research in print.</h2></div><a class="text-link" style="color:#315c7b" href="https://www.researchgate.net/profile/Muhammad-Hannan-6" target="_blank" rel="noopener noreferrer">View all publications ↗</a></div>
+      <div class="publication-list">
+        <article class="publication"><div class="publication-year">2025</div><div><h3>Regional heterogeneity in groundwater response driven by land-use transitions across Pakistan</h3><p>Journal of Hydrology: Regional Studies · 62, 102958</p></div><a href="https://www.researchgate.net/profile/Muhammad-Hannan-6" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a></article>
+        <article class="publication"><div class="publication-year">2024</div><div><h3>Spatiotemporal dynamics of groundwater storage in Pakistan from gravimetric observations</h3><p>Journal of Hydrologic Engineering · 29(6), 05024021</p></div><a href="https://www.researchgate.net/profile/Muhammad-Hannan-6" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a></article>
+        <article class="publication"><div class="publication-year">2025</div><div><h3>Groundwater storage response to extreme hydrological events in Poyang Lake, China’s largest freshwater lake</h3><p>Remote Sensing · 17(6), 988</p></div><a href="https://www.researchgate.net/profile/Muhammad-Hannan-6" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a></article>
+        <article class="publication"><div class="publication-year">2024</div><div><h3>Assessment of Pakistan’s water storage changes using GRACE satellite</h3><p>Technical Journal · 3(ICACEE), 922–929</p></div><a href="https://www.researchgate.net/profile/Muhammad-Hannan-6" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a></article>
+      </div>
+    </section>
+
+    <section class="portfolio-section" aria-labelledby="education-heading">
+      <div class="section-head"><div><div class="section-kicker">Academic path</div><h2 class="display-heading" id="education-heading">Learning water, from field to satellite.</h2></div></div>
+      <div class="education-grid">
+        <article class="education-card"><time>2024 — 2028</time><h3>Ph.D. · Hydrology &amp; Water Resources</h3><p>Hohai University · Nanjing, China<br>First-Class University Scholarship</p></article>
+        <article class="education-card"><time>2022 — 2024</time><h3>M.S. · Integrated Water Resource Management</h3><p>USPCAS-W, Mehran University of Engineering &amp; Technology · Jamshoro<br>First position</p></article>
+        <article class="education-card"><time>2018 — 2022</time><h3>B.Sc. (Hons.) · Agriculture Water Management</h3><p>Bahauddin Zakariya University · Multan<br>Second position</p></article>
+      </div>
+    </section>
+
+    <section class="contact-panel" id="contact"><div><div class="section-kicker">Have a research question or collaboration in mind?</div><h2>Let’s talk about water, data, and what comes next.</h2><p>Based in Nanjing, China · Open to research collaboration and academic exchange.</p></div><div class="contact-actions"><a class="button primary" href="mailto:mhannan7874@gmail.com">Email me ↗</a><a class="button" href="https://www.linkedin.com/in/muhammad-hannan-2763b5255/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div></section>
+    <footer class="portfolio-footer"><span>© <span id="year">2026</span> Muhammad Hannan</span><span>Hydrology · Earth observation · Water security</span><a href="https://github.com/Muhammad-Hannan" target="_blank" rel="noopener noreferrer">GitHub ↗</a></footer>
+  </main>
+
+  <div class="legacy">
+  <!-- SUMMARY -->
+  <h2 class="section"><span class="num">01</span>Professional Summary</h2>
+  <p style="font-size:9.5pt; color:#333;">
+    Ph.D. researcher in Hydrology &amp; Water Resources at Hohai University (Nanjing, China) with a strong record in
+    groundwater and surface-water monitoring using GRACE/GRACE-FO satellite gravimetry, machine-learning downscaling,
+    and Google Earth Engine. First-author publications in <i>Journal of Hydrology: Regional Studies</i>, <i>Journal of
+    Hydrologic Engineering</i>, and <i>Hydrological Processes</i>. Experienced in integrated water resource management,
+    high-efficiency irrigation design, and capacity building — seeking to apply data-driven hydrology toward sustainable
+    water security.
+  </p>
+
+  <!-- EDUCATION -->
+  <h2 class="section"><span class="num">02</span>Education</h2>
+  <div class="item">
+    <div class="item-left"><div class="item-title">Ph.D. — Hydrology and Water Resources</div><div class="item-sub">Hohai University, Nanjing, China</div></div>
+    <div class="item-right">2024 – 2028</div>
+  </div>
+  <div class="item">
+    <div class="item-left"><div class="item-title">M.S. — Integrated Water Resource Management</div><div class="item-sub">U.S.-Pakistan Center for Advanced Studies in Water, Mehran University of Engineering &amp; Technology, Jamshoro</div></div>
+    <div class="item-right">2022 – 2024</div>
+  </div>
+  <div class="item">
+    <div class="item-left"><div class="item-title">B.Sc. (Hons.) — Agriculture Water Management</div><div class="item-sub">Bahauddin Zakariya University, Multan</div></div>
+    <div class="item-right">2018 – 2022</div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <h2 class="section"><span class="num">03</span>Research &amp; Professional Experience</h2>
+  <div class="item">
+    <div class="item-left">
+      <div class="item-title">Research Assistant</div>
+      <div class="item-sub">College of Hydrology and Water Resources, Hohai University, Nanjing, China</div>
+      <ul class="duties">
+        <li>Developing novel deep-learning models to improve the quality and resolution of groundwater downscaling.</li>
+        <li>Quantifying the influence of large water bodies (e.g., Poyang Lake) on surface-water storage in traditional downscaling processes.</li>
+      </ul>
+    </div>
+    <div class="item-right">Apr 2024 – Present</div>
+  </div>
+  <div class="item">
+    <div class="item-left">
+      <div class="item-title">Research Assistant</div>
+      <div class="item-sub">U.S.-Pakistan Center for Advanced Studies in Water (USPCAS-W), MUET, Jamshoro</div>
+      <ul class="duties">
+        <li>Impact assessment of small dams constructed under the Sindh Resilience Project.</li>
+        <li>Directed high-level research in collaboration with postgraduate students; led groundwater data collection at dam sites.</li>
+      </ul>
+    </div>
+    <div class="item-right">Jun 2024 – Aug 2024</div>
+  </div>
+  <div class="item">
+    <div class="item-left">
+      <div class="item-title">Training Coordinator</div>
+      <div class="item-sub">U.S.-Pakistan Center for Advanced Studies in Water (USPCAS-W), MUET, Jamshoro</div>
+      <ul class="duties">
+        <li>Delivered training on IWRM, hydrology, hydraulic structures, GIS, climate change, and participatory irrigation.</li>
+        <li>Managed training programs on operation &amp; maintenance of RO plants and on-farm water management.</li>
+      </ul>
+    </div>
+    <div class="item-right">Oct 2023 – May 2024</div>
+  </div>
+  <div class="item">
+    <div class="item-left">
+      <div class="item-title">Intern</div>
+      <div class="item-sub">Department of On-Farm Water Management, Multan</div>
+      <ul class="duties">
+        <li>Designed high-efficiency pressurized irrigation systems (drip &amp; sprinkler); supervised watercourse lining.</li>
+        <li>Facilitated the formation of Water User Associations.</li>
+      </ul>
+    </div>
+    <div class="item-right">Jan 2022 – Jun 2022</div>
+  </div>
+  <div class="item">
+    <div class="item-left">
+      <div class="item-title">Trainee Officer</div>
+      <div class="item-sub">Department of Agriculture Extension</div>
+      <ul class="duties">
+        <li>Promoted new wheat varieties among farmers; organized and led farmer training sessions and field teams.</li>
+      </ul>
+    </div>
+    <div class="item-right">Nov 2021 – Dec 2021</div>
+  </div>
+
+  <!-- SKILLS -->
+  <h2 class="section"><span class="num">04</span>Technical &amp; Professional Skills</h2>
+  <div class="skills">
+    <span class="chip">IWRM Specialist</span><span class="chip">Applied Hydrology</span><span class="chip">ML / Deep Learning</span>
+    <span class="chip">AI-Based Downscaling</span><span class="chip">GIS &amp; Remote Sensing</span><span class="chip">Python</span>
+    <span class="chip">PyTorch</span><span class="chip">Google Earth Engine</span><span class="chip">Satellite Data Analysis</span>
+    <span class="chip">GRACE / GRACE-FO</span><span class="chip">Database Management</span><span class="chip">Disaster Management</span>
+    <span class="chip">Pressurized Irrigation Design</span><span class="chip">Soil &amp; Water Sampling/Analysis</span>
+    <span class="chip">Research Publication</span><span class="chip">Team &amp; Time Management</span>
+  </div>
+
+  <!-- PUBLICATIONS -->
+  <h2 class="section"><span class="num">05</span>Publications (16 Total — First Author in Bold)</h2>
+  <ol class="pubs">
+    <li><b>Hannan, M.</b>, Lu, C., Ali, M., Hor, V., &amp; Saidy, E. (2027). Machine-learning downscaling of GRACE reveals groundwater depletion hotspots in Pakistan's Indus Basin. <i>Earth Systems and Environment</i>.</li>
+    <li><b>Hannan, M.</b>, &amp; Lu, C. (2026). Opportunities and limitations of GRACE for hydrological monitoring in regions with sparse observations. <i>Journal of Hydrologic Engineering</i>.</li>
+    <li><b>Hannan, M.</b>, Waqas, M., Ali, M., Chand, S., Kandhro, M. A., &amp; Khalid, M. U. Understanding the spatiotemporal hydrological variability and anthropogenic drivers of change in Pakistan's Indus Basin. <i>Earth Sciences Pakistan</i>, 10(1), 47–57.</li>
+    <li><b>Hannan, M.</b>, Ali, M., Lu, C., &amp; Xu, J. (2026). Hydrological variability and flood-driven connectivity in a data-scarce wetland revealed by long-term satellite observations. <i>Hydrological Processes</i>, 40(3), e70474.</li>
+    <li><b>Hannan, M.</b>, Ali, M., Lu, C., &amp; Xu, J. (2026). Hydroclimatic variability and precipitation extremes in Sindh under a changing climate. <i>Advances in Environmental and Engineering Research</i>, 7(1), 1–15.</li>
+    <li>Kandhro, M. A., <b>Hannan, M.</b>, Qureshi, A. L., Gul, N., &amp; Suleman, M. (2026). Evaluating water requirements and yield response of wheat varieties under canal and marginal groundwater irrigation. <i>Journal of Irrigation and Drainage Engineering</i>, 152(5), 05026003.</li>
+    <li><b>Hannan, M.</b>, Lu, C., Waqas, M., Khan, A. U., &amp; Liu, B. (2025). Regional heterogeneity in groundwater response driven by land-use transitions across Pakistan. <i>Journal of Hydrology: Regional Studies</i>, 62, 102958.</li>
+    <li>Waqas, M., <b>Hannan, M.</b>, Lu, C., &amp; Rauf, A. U. (2025). Determining flood return periods in River Swat through statistical approaches. <i>Journal of Advanced Engineering and Management Research</i>.</li>
+    <li>Yu, X., Lu, C., Park, E., Zhang, Y., Wu, C., Li, Z., Chen, J., <b>Hannan, M.</b>, Liu, B., &amp; Shu, L. (2025). Groundwater storage response to extreme hydrological events in Poyang Lake, China's largest fresh-water lake. <i>Remote Sensing</i>, 17(6), 988.</li>
+    <li>Rafy, A. U., <b>Hannan, M.</b>, Mohammed, M., &amp; Khan, N. (2025). Meta-analysis of alternate wetting and drying (AWD) irrigation effects on methane and nitrous oxide emissions across different climates and soil types. <i>European Journal of Ecology, Biology and Agriculture</i>, 2(5), 181–200.</li>
+    <li>Ali, M., Bhutto, S., <b>Hannan, M.</b>, &amp; Xu, J. (2025). A multi-index remote sensing approach to track water shifts in Handero Lake. <i>International Journal of Advanced Engineering and Management Research</i>.</li>
+    <li>Rafy, A. U., <b>Hannan, M.</b>, Chand, M. T., Farid, N., Suleman, M., &amp; Khalid, M. U. (2025). Arsenic accumulation in rice and maize crops and associated human health risks in Punjab, Pakistan. <i>International Journal of Environmental Sciences &amp; Natural Resources</i>.</li>
+    <li><b>Hannan, M.</b>, Ahmed, W., &amp; William, A. (2025). Iron oxide nanoparticles for efficient removal of arsenic from contaminated groundwater. <i>Annual Methodological Archive Research Review</i>.</li>
+    <li>Ali, M., <b>Hannan, M.</b>, &amp; Ahmed, W. (2025). Cascading risks and adaptive deficits: A review of climate change impacts on Pakistan's water security. <i>European Journal of Theoretical and Applied Sciences</i>.</li>
+    <li><b>Hannan, M.</b>, Dars, G. H., Ukasha, M., &amp; Ansari, K. (2024). Spatiotemporal dynamics of groundwater storage in Pakistan from gravimetric observations. <i>Journal of Hydrologic Engineering</i>, 29(6), 05024021.</li>
+    <li><b>Hannan, M.</b>, &amp; Dars, G. H. (2024). Assessment of Pakistan's water storage changes using GRACE satellite. <i>Technical Journal</i>, 3(ICACEE), 922–929.</li>
+  </ol>
+
+  <!-- ACHIEVEMENTS -->
+  <h2 class="section"><span class="num">06</span>Achievements</h2>
+  <ul class="ach">
+    <li>First-Class Hohai University Scholarship for Ph.D. in Hydrology and Water Resources.</li>
+    <li>First Position, M.S. Integrated Water Resource Management (Session 2022–2024), USPCAS-W, MUET.</li>
+    <li>Second Position, B.Sc. (Hons.) Agriculture Water Management (Session 2018–2022), BZU.</li>
+    <li>Prime Minister's Youth Laptop Scheme 2023 — awarded in recognition of outstanding merit.</li>
+  </ul>
+
+  <!-- LANGUAGES & REFERENCES -->
+  <h2 class="section"><span class="num">07</span>References</h2>
+  <div class="item">
+    <div class="item-left">
+      <div class="item-title">Dr. Chengpeng Lu</div>
+      <div class="item-sub">Professor, College of Hydrology and Water Resources, Hohai University, Nanjing, China · luchengpeng@hhu.edu.cn</div>
+    </div>
+    <div class="item-left">
+      <div class="item-title">Dr. Ghulam Hussain Dars</div>
+      <div class="item-sub">Assistant Professor, USPCAS-W, MUET, Jamshoro · ghdars.uspcasw@faculty.muet.edu.pk</div>
+    </div>
+  </div>
+
+  <p class="footer-note">Languages: English · Urdu &nbsp;&nbsp;|&nbsp;&nbsp; Personal details, CNIC/Passport numbers, and full publication list available upon request.</p>
+  </div>
+
+</div>
+</body>
+</html>
